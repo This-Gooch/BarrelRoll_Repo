@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c8547c3fd08c9489e8778c21f0b1ce, type: 3}
   m_Name: TestCard
   m_EditorClassIdentifier: 
-  name: 
+  name: TestCar
+  description: 
   type: 0
   visuals: {fileID: 0}
