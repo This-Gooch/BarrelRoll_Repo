@@ -4,37 +4,54 @@ using UnityEngine;
 
 public class CardExecution : MonoBehaviour{
 
-
     public int storedAttkValue;
+    public int attkPowerStage;
+    public int evdPowerStage;
     public int resolvedValue;
     public Card.eCardType attackType;
+
+    //How many of a card type is hand when played
+    public int testHandNmbrAttk;
+    public int testHandNmbrEvd;
+
     //public Card.eCardType evadeType;
 
+    private ShipManager shipMang;
+    private Ship evadingShip;
 
-	public void AttackTrigger(Card attkInfo)
+    private void Awake()
     {
+        shipMang = GameObject.Find("ShipManager").GetComponent<ShipManager>();
+    }
+
+
+    public void AttackTrigger(Card attkInfo)
+    {
+        CheckEvade();
         storedAttkValue = attkInfo.powerLevel;
         attackType = attkInfo.type;
-        Debug.Log("storedAttkValue = " + storedAttkValue);
+        //attkPowerStage == How many of card type are in attack hand? Set what power stage the attack will be at. 1 = One card, 2 = Two cards, 3 = Three cards
+        Debug.Log("storedAttkValue = " + storedAttkValue + " at power stage " + testHandNmbrAttk);
     }
 
     public void EvadeTrigger(Card evadeInfo)
     {
-        if(evadeInfo.type == Card.eCardType.Spin)
+        //evdPowerStage == How many of card type are in evade hand? Set what power stage the evade will be at. 1 = One card, 2 = Two cards, 3 = Three cards
+        if (evadeInfo.type == Card.eCardType.Spin)
         {
             if(attackType == Card.eCardType.Laser)
             {
-
+                FullEvade(evadeInfo);
             }
 
             if (attackType == Card.eCardType.Bomb)
             {
-
+                NoEvade(evadeInfo);
             }
 
             if (attackType == Card.eCardType.Charge)
             {
-
+                PartialEvade(evadeInfo);
             }
         }
 
@@ -42,17 +59,17 @@ public class CardExecution : MonoBehaviour{
         {
             if (attackType == Card.eCardType.Laser)
             {
-
+                NoEvade(evadeInfo);
             }
 
             if (attackType == Card.eCardType.Bomb)
             {
-
+                PartialEvade(evadeInfo);
             }
 
             if (attackType == Card.eCardType.Charge)
             {
-
+                FullEvade(evadeInfo);
             }
         }
 
@@ -60,45 +77,62 @@ public class CardExecution : MonoBehaviour{
         {
             if (attackType == Card.eCardType.Laser)
             {
-
+                PartialEvade(evadeInfo);
             }
 
             if (attackType == Card.eCardType.Bomb)
             {
-
+                FullEvade(evadeInfo);
             }
 
             if (attackType == Card.eCardType.Charge)
             {
-
+                NoEvade(evadeInfo);
             }
         }
-        //resolvedValue = storedAttkValue - evdValue;
-        /*
-        if(resolvedValue <= 0)
+    }
+
+
+    void FullEvade(Card evdCard)
+    {
+        Debug.Log("Full evade triggered. Evade retains full value");
+        evadingShip.currentHealth = evadingShip.currentHealth - ((storedAttkValue * testHandNmbrAttk) - (evdCard.powerLevel * testHandNmbrEvd));
+        shipMang.UpdateHealth();
+        Debug.Log("Player One ship health is now at " + shipMang.pOneShip.currentHealth + ", and Player Two ship health is now at " + shipMang.pTwoShip.currentHealth);
+    }
+
+    void PartialEvade(Card evdCard)
+    {
+        Debug.Log("Partial Evade Trigger. Evade value reduced by one.");
+        int attkTotal = storedAttkValue * testHandNmbrAttk;
+        int evdTotal = (evdCard.powerLevel - 1) * testHandNmbrEvd;
+        evadingShip.currentHealth = evadingShip.currentHealth - (attkTotal - evdTotal);
+        shipMang.UpdateHealth();
+        Debug.Log("Player One ship health is now at " + shipMang.pOneShip.currentHealth + ", and Player Two ship health is now at " + shipMang.pTwoShip.currentHealth);
+    }
+
+    void NoEvade(Card evdCard)
+    {
+        Debug.Log("No Evade Trigger. Evade value reduced by two");
+        int attkTotal = storedAttkValue * testHandNmbrAttk;
+        int evdTotal = (evdCard.powerLevel - 2) * testHandNmbrEvd;
+        evadingShip.currentHealth = evadingShip.currentHealth - (attkTotal - evdTotal);
+        shipMang.UpdateHealth();
+        Debug.Log("Player One ship health is now at " + shipMang.pOneShip.currentHealth + ", and Player Two ship health is now at " + shipMang.pTwoShip.currentHealth);
+    }
+
+    void CheckEvade()
+    {
+        if(shipMang.pOneShip.position == Ship.eShipPosition.Evading)
         {
-            Debug.Log("Attack evaded");
+            evadingShip = shipMang.pOneShip;
         }
         else
         {
-            Debug.Log("Evade takes " + resolvedValue + " damage.");
+            evadingShip = shipMang.pTwoShip;
         }
-        */
     }
 
-    void FullEvade()
-    {
 
-    }
-
-    void PartialEvade()
-    {
-
-    }
-
-    void NoEvade()
-    {
-
-    }
 
 }

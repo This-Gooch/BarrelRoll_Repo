@@ -17,20 +17,11 @@ public class Card : ScriptableObject {
         Special
     }
 
-    public enum eCardStage
-    {
-        StageOne,
-        StageTwo,
-        StageThree
-    }
-
-
     public new string name;
     public string description;
     [Tooltip("Base value for damage done and/or damage reduced.")]
     public int powerLevel;
     public eCardType type;
-    public eCardStage powerStage;
     public Sprite cardArt;
     public Material visuals;
 

@@ -14,7 +14,6 @@ MonoBehaviour:
   name: U-Turn
   description: 
   powerLevel: 3
-  type: 0
-  powerStage: 0
+  type: 5
   cardArt: {fileID: 21300000, guid: 934717fe1ed303d40bb38248288ef95f, type: 3}
   visuals: {fileID: 0}

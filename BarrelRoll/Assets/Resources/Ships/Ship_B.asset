@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eacc0b25b8e4bc4391e76390c981b49, type: 3}
   m_Name: Ship_B
   m_EditorClassIdentifier: 
-  health: 10
+  startHealth: 20
+  currentHealth: 11
   shields: 0
   idle: {fileID: 0}
   position: 1
+  attkSpecialization: 1
+  evdSpecialization: 1

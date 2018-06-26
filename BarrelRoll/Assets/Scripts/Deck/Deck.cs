@@ -34,6 +34,8 @@ public class Deck : MonoBehaviour {
     ////////////////////////////////
     private Stack<Card> m_Deck = new Stack<Card>();
 
+
+
     #region Unity API
     #endregion
 
@@ -51,6 +53,11 @@ public class Deck : MonoBehaviour {
     public void Shuffle()
     {
         m_Deck.Shuffle();
+    }
+
+    public void Print()
+    {
+        Debug.Log(m_Deck);
     }
     #endregion
 
