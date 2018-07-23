@@ -17,11 +17,19 @@ public class Card : ScriptableObject {
         Special
     }
 
+    public enum eCardPosition
+    {
+        Attack,
+        Evade
+    }
+
+
     public new string name;
     public string description;
     [Tooltip("Base value for damage done and/or damage reduced.")]
     public int powerLevel;
     public eCardType type;
+    public eCardPosition cardPosition;
     public Sprite cardArt;
     public Material visuals;
 

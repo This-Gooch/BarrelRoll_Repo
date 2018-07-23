@@ -15,6 +15,6 @@ MonoBehaviour:
   description: 
   powerLevel: 3
   type: 3
-  powerStage: 0
+  cardPosition: 1
   cardArt: {fileID: 21300000, guid: fcae7e0c3eb46f54b98d3661a5dd9ea5, type: 3}
   visuals: {fileID: 0}

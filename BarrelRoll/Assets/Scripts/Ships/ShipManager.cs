@@ -15,11 +15,14 @@ public class ShipManager : MonoBehaviour {
     public Image shipHealthUI_B;
     private RectTransform healthRectA;
     private RectTransform healthRectB;
-    public GameObject attkPostNode;
-    public GameObject evdPostNode;
+
+    private Deck deckMang;
+    //public GameObject attkPostNode;
+    //public GameObject evdPostNode;
 
     private void Awake()
     {
+        deckMang = GameObject.Find("DeckManager").GetComponent<Deck>();
         pOneShip.currentHealth = pOneShip.startHealth;
         pTwoShip.currentHealth = pOneShip.startHealth;
         healthRectA = shipHealthUI_A.GetComponent<RectTransform>();
@@ -27,18 +30,20 @@ public class ShipManager : MonoBehaviour {
       
         if(pOneShip.position == Ship.eShipPosition.Attacking)
         {
-            shipObjectA.transform.position = attkPostNode.transform.position;
-            shipObjectB.transform.position = evdPostNode.transform.position;
-            healthRectA.anchoredPosition = new Vector2(0, -230);
-            healthRectB.anchoredPosition = new Vector2(0, 230);
+            deckMang.FillDecks(true);
+            shipObjectA.transform.rotation = Quaternion.Euler(270, 0, 0);
+            shipObjectB.transform.rotation = Quaternion.Euler(270, 0, 0);
+            //healthRectA.anchoredPosition = new Vector2(0, -230);
+            //healthRectB.anchoredPosition = new Vector2(0, 230);
 
         }
         else
         {
-            shipObjectA.transform.position = evdPostNode.transform.position;
-            shipObjectB.transform.position = attkPostNode.transform.position;
-            healthRectA.anchoredPosition = new Vector2(0, 230);
-            healthRectB.anchoredPosition = new Vector2(0, -230);
+            deckMang.FillDecks(false);
+            shipObjectA.transform.rotation = Quaternion.Euler(90, 180, 0);
+            shipObjectB.transform.rotation = Quaternion.Euler(90, 180, 0);
+           // healthRectA.anchoredPosition = new Vector2(0, 230);
+           // healthRectB.anchoredPosition = new Vector2(0, -230);
 
         }
           
@@ -48,21 +53,23 @@ public class ShipManager : MonoBehaviour {
     {
         if(pOneShip.position == Ship.eShipPosition.Attacking)
         {
+            deckMang.FillDecks(false);
             pOneShip.position = Ship.eShipPosition.Evading;
             pTwoShip.position = Ship.eShipPosition.Attacking;
-            shipObjectA.transform.position = evdPostNode.transform.position;
-            shipObjectB.transform.position = attkPostNode.transform.position;
-            healthRectA.anchoredPosition = new Vector2(0, 230);
-            healthRectB.anchoredPosition = new Vector2(0, -230);
+            shipObjectA.transform.rotation = Quaternion.Euler(90, 180, 0);
+            shipObjectB.transform.rotation = Quaternion.Euler(90, 180, 0);
+            //healthRectA.anchoredPosition = new Vector2(0, 230);
+            //healthRectB.anchoredPosition = new Vector2(0, -230);
 
 
         }
         else
         {
+            deckMang.FillDecks(true);
             pOneShip.position = Ship.eShipPosition.Attacking;
             pTwoShip.position = Ship.eShipPosition.Evading;
-            shipObjectA.transform.position = attkPostNode.transform.position;
-            shipObjectB.transform.position = evdPostNode.transform.position;
+            shipObjectA.transform.rotation = Quaternion.Euler(270, 0, 0);
+            shipObjectB.transform.rotation = Quaternion.Euler(270, 0, 0);
             healthRectA.anchoredPosition = new Vector2(0, -230);
             healthRectB.anchoredPosition = new Vector2(0, 230);
 
